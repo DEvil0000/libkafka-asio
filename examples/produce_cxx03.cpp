@@ -19,19 +19,8 @@
 using libkafka_asio::Connection;
 using libkafka_asio::ProduceRequest;
 using libkafka_asio::ProduceResponse;
-
-void HandleRequest(const Connection::ErrorCodeType& err,
-                   const ProduceResponse::OptionalType& response)
-{
-  if (err)
-  {
-    std::cerr
-      << "Error: " << boost::system::system_error(err).what()
-      << std::endl;
-    return;
-  }
-  std::cout << "Successfully produced message!" << std::endl;
-}
+using libkafka_asio::SimpleProducer;
+using libkafka_asio::Bytes;
 
 int main(int argc, char **argv)
 {
@@ -39,25 +28,28 @@ int main(int argc, char **argv)
   configuration.auto_connect = true;
   configuration.client_id = "libkafka_asio_example";
   configuration.socket_timeout = 10000;
-  configuration.AddBrokerFromString("192.168.15.137:49162");
-  configuration.AddBrokerFromString("192.168.15.137:49164");
-  configuration.AddBrokerFromString("192.168.15.137:49166");
+  configuration.AddBrokerFromString("192.168.8.140:9092");
 
   boost::asio::io_service ios;
   Connection connection(ios, configuration);
 
-  // Create a 'Produce' request and add a single message to it. The value of
-  // that message is set to "Hello World". The message is produced for topic
-  // "mytopic" and partition 0.
-  ProduceRequest request;
-  request.AddValue("Hello World", "mytopic", 0);
-
-  // Send the prepared produce request.
-  // The connection will attempt to automatically connect to one of the brokers,
-  // specified in the configuration.
-  connection.AsyncRequest(request, &HandleRequest);
+  SimpleProducer::Configuration producerConfiguration;
+  SimpleProducer producer(connection, ios, producerConfiguration);
+  
+  Bytes one_k_message(new Bytes::element_type(1000));
+  for (int i=0;i<1000;i++)
+  {
+      one_k_message->push_back('x');
+  }
+  
+  for (int i=0;i<10000;i++)
+  {
+    producer.produce(one_k_message, "mytopic", 0);
+  }
 
   // Let's go!
+  int timeout = 1;
+  ios.post(boost::bind(&SimpleProducer::close, &producer, timeout));
   ios.run();
   return 0;
 }

@@ -205,7 +205,7 @@ inline void Connection::SerializeAndEnqueue(
 
 inline void Connection::HandleAsyncResolve(
   const Connection::ErrorCodeType& error,
-  Connection::ResolverType::iterator iter,
+  ResolverType::iterator iter,
   const Connection::SharedConnectionState& state,
   const Connection::ConnectionHandlerType& handler)
 {
@@ -270,7 +270,7 @@ template<typename TRequest>
 void Connection::HandleAsyncRequestWrite(
   const Connection::ErrorCodeType& error,
   size_t bytes_transferred,
-  Connection::StreambufType buffer,
+  StreambufType buffer,
   const Connection::SharedConnectionState& state,
   const typename Connection::Handler<TRequest>::Type& handler,
   bool response_expected)
@@ -321,7 +321,7 @@ template<typename TRequest>
 void Connection::HandleAsyncResponseSizeRead(
   const ErrorCodeType& error,
   size_t bytes_transferred,
-  Connection::StreambufType buffer,
+  StreambufType buffer,
   const Connection::SharedConnectionState& state,
   const typename Connection::Handler<TRequest>::Type& handler)
 {
@@ -373,7 +373,7 @@ template<typename TRequest>
 void Connection::HandleAsyncResponseRead(
   const Connection::ErrorCodeType& error,
   size_t bytes_transferred,
-  Connection::StreambufType buffer,
+  StreambufType buffer,
   const Connection::SharedConnectionState& state,
   const typename Connection::Handler<TRequest>::Type& handler)
 {

@@ -21,6 +21,12 @@
 
 namespace libkafka_asio
 {
+  typedef boost::asio::io_service IOServiceType;
+  typedef boost::asio::ip::tcp::resolver ResolverType;
+  typedef boost::asio::ip::tcp::socket SocketType;
+  typedef boost::asio::deadline_timer DeadlineTimerType;
+  typedef boost::asio::strand StrandType;
+  typedef boost::shared_ptr<boost::asio::streambuf> StreambufType;
 
 //
 // Kafka API client using the asio library. Connection objects are used to connect
@@ -46,12 +52,7 @@ class Connection :
     kStateReading,
     kStateDestroyed = -1
   };
-
-  typedef boost::asio::io_service IOServiceType;
-  typedef boost::asio::ip::tcp::resolver ResolverType;
-  typedef boost::asio::ip::tcp::socket SocketType;
-  typedef boost::asio::deadline_timer DeadlineTimerType;
-  typedef boost::shared_ptr<boost::asio::streambuf> StreambufType;
+  
   typedef boost::shared_ptr<ConnectionState> SharedConnectionState;
 
 public:

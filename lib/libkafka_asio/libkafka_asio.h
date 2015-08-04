@@ -34,4 +34,7 @@
 #include <libkafka_asio/offset_commit_request.h>
 #include <libkafka_asio/offset_fetch_request.h>
 
+// Simple Producer
+#include <libkafka_asio/simple_producer.h>
+
 #endif  // LIBKAFKA_ASIO_H_D2B00651_6C27_47B1_9403_2856E2D065EA
