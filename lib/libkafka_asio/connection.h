@@ -76,7 +76,7 @@ public:
   // Create a new connection object.
   // Connection attempts and requests to the Kafka server will be scheduled
   // on the given io_service object.
-  Connection(boost::asio::io_service& io_service,
+  Connection(IOServiceType& io_service,
          const Configuration& configuration = Configuration());
 
   // A possibly open connection will be closed on destruction of connection objects.
@@ -186,7 +186,7 @@ private:
   // Attempt to connect to the broken, pointed to by the given iterator
   void AutoConnect(
     const ConnectionHandlerType& handler,
-    const Configuration::BrokerList::const_iterator& broker_iter);
+    const BrokerList::const_iterator& broker_iter);
 
   // If there is at least one request in the queue, then start working on it
   void SendNextRequest(const ErrorCodeType& error,
@@ -213,7 +213,7 @@ private:
   void HandleAsyncAutoConnect(
     const ErrorCodeType& error,
     const ConnectionHandlerType& handler,
-    Configuration::BrokerList::const_iterator& broker_iter);
+    BrokerList::const_iterator& broker_iter);
 
   // Handle async request write operations
   template<typename TRequest>

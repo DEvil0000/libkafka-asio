@@ -85,7 +85,7 @@ inline void Connection::AsyncConnect(const Connection::ConnectionHandlerType& ha
     return;
   }
 
-  Configuration::BrokerList::const_iterator broker_iter =
+  BrokerList::const_iterator broker_iter =
     configuration_.broker_list.begin();
   AutoConnect(handler, broker_iter);
 }
@@ -132,7 +132,7 @@ inline void Connection::SetDeadline()
 
 inline void Connection::AutoConnect(
   const Connection::ConnectionHandlerType& handler,
-  const Connection::Configuration::BrokerList::const_iterator& broker_iter)
+  const BrokerList::const_iterator& broker_iter)
 {
   ResolverType::query query(broker_iter->hostname, broker_iter->service);
   ConnectionHandlerType wrapped_handler = boost::bind(
@@ -252,7 +252,7 @@ inline void Connection::HandleAsyncConnect(
 inline void Connection::HandleAsyncAutoConnect(
   const Connection::ErrorCodeType& error,
   const Connection::ConnectionHandlerType& handler,
-  Connection::Configuration::BrokerList::const_iterator& broker_iter)
+  BrokerList::const_iterator& broker_iter)
 {
   if (error)
   {

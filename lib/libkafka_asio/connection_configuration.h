@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <libkafka_asio/primitives.h>
+#include <libkafka_asio/broker_address.h>
 
 namespace libkafka_asio
 {
@@ -11,16 +12,6 @@ namespace libkafka_asio
 // Connection configuration data structure
 struct ConnectionConfiguration
 {
-  // Broker address configuration data structure
-  struct BrokerAddress
-  {
-    std::string hostname;
-    std::string service;
-  };
-
-  // List of broker address configurations
-  typedef std::vector<BrokerAddress> BrokerList;
-
   // Maximum number of bytes to transmit for messages.
   // Default value is 4194304 (4 MB).
   Int32 message_max_bytes;
