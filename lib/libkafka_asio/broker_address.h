@@ -24,6 +24,8 @@ struct BrokerAddress
   // Create a broker using the given hostname and service parameter.
   // Both will be casted to string using a lexical_cast.
   BrokerAddress(const std::string& hostname, const std::string& service);
+  
+  const std::string toString() const;
 };
 
 // List of broker address configurations

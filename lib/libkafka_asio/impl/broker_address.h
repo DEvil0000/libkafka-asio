@@ -1,6 +1,7 @@
 #ifndef BROKER_ADDRESS_H_52126CBC_3AB0_11E5_A151_FEFF819CDC9F
 #define BROKER_ADDRESS_H_52126CBC_3AB0_11E5_A151_FEFF819CDC9F
 
+#include <sstream>
 #include <exception>
 #include <libkafka_asio/constants.h>
 
@@ -36,6 +37,13 @@ BrokerAddress::BrokerAddress(const std::string& hostname, const std::string& ser
   hostname(hostname),
   service(service)
 {
+}
+
+const std::string BrokerAddress::toString() const
+{
+    std::stringstream ss;
+    ss << hostname << ':' << service;
+    return ss.str();
 }
   
 }  // namespace libkafka_asio
